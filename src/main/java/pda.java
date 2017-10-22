@@ -112,20 +112,21 @@ public class pda extends Application{
             char[] input = inputString.toCharArray();
             Boolean uno = false;
 
-            if(inputString == "") { // when the string is empty, then this is a PDA
+
+            if(((HBox)stringLabel).getChildren().size() == 0) { // when the string is empty, then this is a PDA
                 output_lbl.setText("The string is a PDA");
                 isPDA = true;
             }else if(stringLabel instanceof HBox){
-                for(Node nodeIn:((HBox)stringLabel).getChildren()){
+            for(Node nodeIn:((HBox)stringLabel).getChildren()){
                     if (nodeIn instanceof Label) {
                         if((((HBox)stringLabel).getChildren().indexOf(nodeIn)) == i) { // check for elements of a string one by one
-                            Label txt = new Label(((Label)nodeIn).getText());
+                            Label txt = new Label(((Label) nodeIn).getText());
                             txt.setPadding(new Insets(0, 0, 0, 30));
 
-                            if (((Label)nodeIn).getText().equals("0") && !uno) { // if 0, then add the string on the stack
-                                bottomVBox.getChildren().add(0,txt);
-                                states.push(((Label)nodeIn).getText().equals("0"));
-                            } else if (((Label)nodeIn).getText().equals("1")) { // if 1, then remove one 0 from the stack
+                            if (((Label) nodeIn).getText().equals("0") && !uno) { // if 0, then add the string on the stack
+                                bottomVBox.getChildren().add(0, txt);
+                                states.push(((Label) nodeIn).getText().equals("0"));
+                            } else if (((Label) nodeIn).getText().equals("1")) { // if 1, then remove one 0 from the stack
                                 uno = true;
                                 if (!states.empty()) {
                                     ObservableList<Node> lst = bottomVBox.getChildren();
@@ -137,6 +138,8 @@ public class pda extends Application{
                                     System.out.println("We have nothing in the stack to pop....");
                                     isPDA = false; //We have more 1's then 0's
                                 }
+                            } else if (((Label)nodeIn).getText().equals("")) {
+                                isPDA = true;
                             } else { // if string element other than 0 or 1, then this is not a PDA
                                 output_lbl.setText("This is not part of the language");
                                 //System.out.println("This is not part of the language....");
@@ -144,8 +147,11 @@ public class pda extends Application{
                             }
 
                             if((((HBox)stringLabel).getChildren().indexOf(nodeIn)) == (((HBox)stringLabel).getChildren().size() - 1)) { // check when reached end of the string
-                                if(!states.empty() || !isPDA) output_lbl.setText("The string is not a PDA");
-                                else output_lbl.setText("The string is a PDA");
+                                if(!states.empty() || !isPDA) {
+                                    output_lbl.setText("The string is not a PDA");
+                                } else {
+                                    output_lbl.setText("The string is a PDA");
+                                }
                             }
 
                             if(!isPDA) break;
