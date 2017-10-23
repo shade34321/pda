@@ -1,4 +1,8 @@
 import java.util.Stack;
+/*
+* We are learning about git
+*
+*/
 
 /*libraries for javafx*/
 import javafx.application.Application;
