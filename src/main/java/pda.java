@@ -71,24 +71,6 @@ public class pda extends Application{
         topVBox.getChildren().add(push_btn);
         topVBox.getChildren().add(output_lbl);
 
-        // code to input the string from the textbox into the display string
-        inputStringBtn.setOnMouseClicked(event -> {
-            stringLabelHB.getChildren().clear();
-            i = 0;
-            output_lbl.setText("Push the string on the stack!!");
-            states.clear();
-            isPDA = true;
-
-            // get the string from the textbox and display it
-            for(int j = 0; j < textBox.getText().length(); j++) {
-                char a_char = textBox.getText().charAt(j);
-                Label label = new Label(String.valueOf(a_char));
-                label.setTextFill(Color.WHITE);
-                stringLabelHB.getChildren().add(label);
-            }
-        });
-
-
         /* Code for the lower half part of the GUI
          * */
 
@@ -161,6 +143,30 @@ public class pda extends Application{
             }
 
             i = i + 1;
+        });
+        
+        // code to input the string from the textbox into the display string
+        inputStringBtn.setOnMouseClicked(event -> {
+            stringLabelHB.getChildren().clear();
+            i = 0;
+            output_lbl.setText("Push the string on the stack!!");
+            states.clear();
+            isPDA = true;
+            ObservableList<Node> lst = bottomVBox.getChildren();
+            int GUIstackSize = lst.size();
+            
+            // empty the stack GUI before inputing anything in the display label
+            for(int k = 0; k < GUIstackSize-1; k++) {
+            	lst.remove(0);
+            }
+
+            // get the string from the textbox and display it
+            for(int j = 0; j < textBox.getText().length(); j++) {
+                char a_char = textBox.getText().charAt(j);
+                Label label = new Label(String.valueOf(a_char));
+                label.setTextFill(Color.WHITE);
+                stringLabelHB.getChildren().add(label);
+            }
         });
 
         // Window Pane where we add the upper and lower part of the UI
